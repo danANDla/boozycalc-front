@@ -1,5 +1,5 @@
 <template>
-  <basic-template @getItems="getData"></basic-template>
+  <basic-template :items="items" @getItems="getData"></basic-template>
 </template>
 
 <script>
@@ -26,6 +26,11 @@ import BasicTemplate from "@/components/MainAppComponents/BasicTemplate";
 export default {
   name: "listsViewer",
   components: {BasicTemplate},
+  data(){
+    return{
+      items: this.$store.state.items.ingredients
+    }
+  },
   methods:{
     getData: function(){
       sendReq("ingredients/all", "GET", "")
@@ -37,7 +42,8 @@ export default {
           })
           .then(response => response.json())
           .then(data =>{
-            console.log(data)
+            this.$store.commit('items/updateIngredients', data)
+            this.items = this.$store.state.items.ingredients
           })
     }
   }

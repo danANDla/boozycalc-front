@@ -1,9 +1,11 @@
 <template>
-  <lists-viewer></lists-viewer>
+  <div class="app">
+    <router-view> </router-view>
+  </div>
 </template>
 
 <script>
-import ListsViewer from "@/Views/ListsViewer";
+import ListsViewer from "@/views/ListsViewer";
 
 export default {
   components: {ListsViewer}
