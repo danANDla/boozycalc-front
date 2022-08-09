@@ -28,13 +28,11 @@ export default {
 <style scoped>
 .container{
   width: 60%;
-  padding-top: 200px;
 }
 .menu{
   height: fit-content;
   display: flex;
   flex-direction: column;
-  padding: 10px 0 10px 10px;
   background-color: black;
   color: black;
   align-items: center;
