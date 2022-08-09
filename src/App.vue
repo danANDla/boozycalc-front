@@ -25,11 +25,7 @@ html, body {
   background: #2A2F30;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
-  color: #CFE5EE;
+  color: white;
   font-size: 20px;
-}
-.app{
-  max-width: 1500px;
-  margin: 0 auto;
 }
 </style>
