@@ -1,6 +1,8 @@
 <template>
   <div class="body-container">
-    <header>Header</header>
+    <header>
+      <boozy-header></boozy-header>
+    </header>
 
     <main>
       <div class="content-container">
@@ -22,10 +24,11 @@ import TypedItemSection from "@/components/MainAppComponents/TypedItemSection";
 import ItemsGrid from "@/components/MainAppComponents/ItemsGrid";
 import RectButton from "@/components/UI/RectButton";
 import NavMenu from "@/components/NavMenu";
+import BoozyHeader from "@/components/TheHeader";
 
 export default {
   name: "BasicTemplate",
-  components: {RectButton, ItemsGrid, TypedItemSection, NavMenu},
+  components: {BoozyHeader, RectButton, ItemsGrid, TypedItemSection, NavMenu},
   methods: {
   }
 }

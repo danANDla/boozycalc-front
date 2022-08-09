@@ -28,5 +28,8 @@ html, body {
   color: whitesmoke;
   font-size: 20px;
 }
-
+.app{
+  max-width: 1500px;
+  margin: 0 auto;
+}
 </style>
