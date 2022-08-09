@@ -4,10 +4,14 @@
     <div class="item-container" v-for="item in items">
       <div class="item-navbar">
         <div class="nav-option">
-          <font-awesome-icon icon="fa-solid fa-bars"/>
+          <div class="nav-icon">
+            <font-awesome-icon icon="fa-solid fa-bars"/>
+          </div>
         </div>
         <div class="nav-option">
-          <font-awesome-icon icon="fas fa-trash"/>
+          <div class="nav-icon-trash">
+            <font-awesome-icon icon="fas fa-trash"/>
+          </div>
         </div>
       </div>
       <div class="item-body">
@@ -73,5 +77,18 @@ export default {
 .item-body {
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.item-container {
+  pointer-events: none;
+  transition: all 0.2s;
+}
+
+.nav-option > .nav-icon-trash  {
+  pointer-events: auto;
+}
+
+.item-container:hover {
+  background: darkred;
 }
 </style>
