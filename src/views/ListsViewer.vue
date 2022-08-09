@@ -1,6 +1,5 @@
 <template>
   <div class="content-container">
-    <rect-button btn-tyoe="safe" @click="fetchIngredients"> Fetch Ingredients</rect-button>
     <typed-item-section v-bind:items="ingredients" type-name="type 1"> </typed-item-section>
   </div>
 </template>
@@ -66,10 +65,11 @@ export default {
     //         this.items = this.$store.state.items.ingredients
     //       })
     // },
-    mounted(){
-      // this.updateIngredients();
-      this.fetchIngredients()
-    }
+  },
+  mounted(){
+    // this.updateIngredients();
+    console.log("Fetching")
+    this.fetchIngredients()
   }
 }
 </script>

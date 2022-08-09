@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import ListsViewer from "@/views/ListsViewer";
 
 export default {
-  components: {ListsViewer}
+  methods:{
+  }
 }
 </script>
 
