@@ -8,7 +8,7 @@
     </main>
 
     <nav>
-<!--      <nav-menu></nav-menu>-->
+      <nav-menu></nav-menu>
     </nav>
 
     <aside>Sidebar</aside>

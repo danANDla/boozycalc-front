@@ -4,13 +4,16 @@
     <main>
       <div class="content-container">
         <typed-item-section :items="items" type-name="type 1"> </typed-item-section>
-        <typed-item-section :items="items" type-name="type 2"> </typed-item-section>
       </div>
     </main>
     <nav>
       <div class="nav-container">
-        Navigation
-        <rect-button @click.native="update" btn-tyoe="purple"> get data </rect-button>
+        <div>
+          Navigation
+        </div>
+        <div>
+          <rect-button @click.native="update()" btn-tyoe="safe"> update</rect-button>
+        </div>
       </div>
     </nav>
     <aside>Sidebar</aside>
@@ -25,14 +28,18 @@ import RectButton from "@/components/UI/RectButton";
 export default {
   name: "BasicTemplate",
   components: {RectButton, ItemsGrid, TypedItemSection},
-  data(){
-    return{
-      items: this.$store.state.items.ingredients
+  props:{
+    items:{
+      type: Array,
+      required: true
     }
   },
   methods:{
-    update: function(){
+    update(){
       this.$emit('getItems')
+    },
+    created(){
+      this.update();
     }
   }
 }
@@ -66,6 +73,13 @@ nav{
   background-color: steelblue;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.nav-container > div{
+  flex-grow: 1;
+  padding: 5px;
+  text-align: right;
 }
 main{
   grid-area: content;
