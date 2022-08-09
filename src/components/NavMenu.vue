@@ -2,7 +2,9 @@
   <div class="container">
     <div class="menu">
       <div class="item">
-        <menu-nav-button>Ingredients | Cocktails</menu-nav-button>
+        <router-link to="/items" v-slot="{ href, navigate}">
+          <menu-nav-button :href="href" @click="navigate">Ingredients | Cocktails</menu-nav-button>
+        </router-link>
       </div>
       <div class="item">
         <menu-nav-button>Stock Manager</menu-nav-button>
@@ -15,9 +17,10 @@
 </template>
 
 <script>
+import MenuNavButton from "@/components/UI/MenuNavButton";
 export default {
   name: "NavMenu",
-  components: {}
+  components: {MenuNavButton}
 
 }
 </script>
@@ -43,5 +46,8 @@ export default {
   display: flex;
   justify-content: start;
   background-color: white;
+}
+.item > *{
+  width: 100%;
 }
 </style>
