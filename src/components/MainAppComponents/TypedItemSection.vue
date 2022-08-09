@@ -28,7 +28,7 @@ export default {
 
 <style scoped>
 .section-container{
-  background-color: slategray;
+  background-color: #576163;
   display: flex;
   flex-direction: column;
 }

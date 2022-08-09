@@ -32,7 +32,7 @@ export default {
 }
 
 .grid-item{
-  background-color: steelblue;
+  background-color: #69AAB8;
   font-size: 20px;
   padding: 20px;
   border: skyblue 1px solid;
