@@ -9,7 +9,7 @@
         <router-link to="/"> Home </router-link>
       </li>
       <li>
-        Log in
+        <router-link to="/"> Log in </router-link>
       </li>
     </ul>
   </div>
@@ -28,7 +28,6 @@ export default {
 .container{
   height: 100%;
   padding: 0 30px;
-  background-color: #2E5B88BB;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,11 +48,16 @@ export default {
 }
 
 .container ul li a:hover{
-  color: navajowhite;
+  color: #CFE5EE;
+}
+
+.container ul li a{
+  font-weight: bold;
+  color: #2A2F30;
 }
 
 .container a{
-  color: whitesmoke;
+  color: #2A2F30;
   text-decoration: none;
 }
 </style>

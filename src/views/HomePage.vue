@@ -52,6 +52,7 @@ header, footer, nav, aside, main {
 
 header {
   grid-area: header;
+  background-color: skyblue;
 }
 
 nav {

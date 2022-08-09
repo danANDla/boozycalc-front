@@ -22,10 +22,10 @@ export default {
 }
 
 html, body {
-  background: #343434;
+  background: #2A2F30;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
-  color: whitesmoke;
+  color: #CFE5EE;
   font-size: 20px;
 }
 .app{
