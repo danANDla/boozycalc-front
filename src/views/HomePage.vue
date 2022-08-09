@@ -4,6 +4,7 @@
 
     <main>
       <div class="content-container">
+        <router-view></router-view>
       </div>
     </main>
 
