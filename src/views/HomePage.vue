@@ -47,7 +47,6 @@ export default {
 }
 
 header, footer, nav, aside, main {
-  border: skyblue 1px solid;
 }
 
 header {
@@ -59,12 +58,12 @@ nav {
   grid-area: nav;
   display: flex;
   justify-content: end;
+  padding: 10px;
 }
 
 
 main {
   grid-area: content;
-  background-color: #343434;
   padding: 10px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -73,6 +72,7 @@ main {
 
 footer {
   grid-area: footer;
+  background-color: black;
 }
 
 aside {
