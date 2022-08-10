@@ -19,7 +19,7 @@
         <div>{{ item.description }}</div>
       </div>
     </div>
-    <div class="add-item-btn-container">
+    <div class="add-item-btn-container" @click="addItem">
       <font-awesome-icon icon="fas fa-plus"></font-awesome-icon>
     </div>
 
@@ -33,6 +33,11 @@ export default {
     items: {
       type: Array,
       required: true
+    }
+  },
+  methods:{
+    addItem(){
+      this.$emit('addItem')
     }
   }
 }

@@ -2,7 +2,7 @@
   <div class="section-container">
     <div class="section-header"> {{this.typeName}}  </div>
     <div class="section-body">
-      <items-grid :items="items"></items-grid>
+      <items-grid :items="items" @addItem="addItem"></items-grid>
     </div>
   </div>
 </template>
@@ -22,6 +22,11 @@ export default {
       type: Array,
       required: true
     },
+  },
+  methods: {
+    addItem(){
+      this.$emit('addItem')
+    }
   }
 }
 </script>

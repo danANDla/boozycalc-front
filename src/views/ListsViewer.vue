@@ -1,10 +1,15 @@
 <template>
+  <dialog-window v-model:show="dialogVisible">
+    <div class="form-container">
+      <add-item-form></add-item-form>
+    </div>
+  </dialog-window>
   <Toggle v-model="page"></Toggle>
   <div class="content-container" v-if="page===true">
-    <typed-item-section v-bind:items="ingredients" type-name="Ingredients"></typed-item-section>
+    <typed-item-section v-bind:items="ingredients" type-name="Ingredients" @addItem="showIngredientsDialog"></typed-item-section>
   </div>
   <div class="content-container" v-else>
-    <typed-item-section v-bind:items="cocktails" type-name="Cocktails"></typed-item-section>
+    <typed-item-section v-bind:items="cocktails" type-name="Cocktails" ></typed-item-section>
   </div>
 </template>
 
@@ -13,6 +18,9 @@
 import TypedItemSection from "@/components/MainAppComponents/TypedItemSection";
 import Toggle from "@vueform/toggle"
 import axios from 'axios';
+import AddItemForm from "@/components/AddItemForm";
+import RectButton from "@/components/UI/RectButton";
+import DialogWindow from "@/components/UI/DialogWindow";
 
 async function sendReq(url, reqMethod, params) {
   url = "http://127.0.0.1:8080/api/" + url;
@@ -33,13 +41,14 @@ async function sendReq(url, reqMethod, params) {
 
 export default {
   name: "listsViewer",
-  components: {TypedItemSection, Toggle},
+  components: {DialogWindow, RectButton, AddItemForm, TypedItemSection, Toggle},
   data() {
     return {
       ingredients: this.$store.state.items.ingredients,
       cocktails: this.$store.state.items.cocktails,
       api_url: "http://127.0.0.1:8080/api/",
-      page: false
+      page: false,
+      dialogVisible: false
     }
   },
   methods: {
@@ -63,6 +72,9 @@ export default {
         alert(e.message)
       }
     },
+    showIngredientsDialog(){
+      this.dialogVisible = true
+    }
   },
   mounted() {
     console.log("Fetching")
@@ -78,5 +90,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 18px;
+}
+.form-container{
+  width: 350px;
 }
 </style>
