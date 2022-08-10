@@ -43,7 +43,7 @@ export default {
       'nav content sidebar'
       'footer footer footer';
   grid-template-columns: 2fr 6fr 1fr;
-  grid-template-rows: 80px 1fr 80px;
+  grid-template-rows: 90px 1fr 80px;
 }
 
 header, footer, nav, aside, main {
@@ -51,7 +51,7 @@ header, footer, nav, aside, main {
 
 header {
   grid-area: header;
-  background-color: skyblue;
+  margin-bottom: 20px;
 }
 
 nav {
