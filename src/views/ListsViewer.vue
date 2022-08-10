@@ -6,10 +6,10 @@
   </dialog-window>
   <dialog-window v-model:show="ingrsSureVisible">
     <div class="form-container">
-      <are-you-sure @sure="sure" @notsure="notsure"> delete {{ingrSureId}}</are-you-sure>
+      <are-you-sure @sure="sure" @notsure="notsure"> delete {{ ingrSureId }}</are-you-sure>
     </div>
   </dialog-window>
-<!--  <Toggle v-model="page"></Toggle>-->
+  <!--  <Toggle v-model="page"></Toggle>-->
   <div class="list-container">
     <div>
       <my-tabz
@@ -19,10 +19,11 @@
       />
     </div>
     <div v-if="page==='ingredients'">
-      <typed-item-section  v-bind:items="ingredients" type-name="" @addItem="showIngredientsDialog" @deleteItem="showSureIngredient"></typed-item-section>
+      <typed-item-section v-bind:items="ingredients" type-name="" @addItem="showIngredientsDialog"
+                          @deleteItem="showSureIngredient"></typed-item-section>
     </div>
     <div v-else>
-      <typed-item-section v-bind:items="cocktails" type-name="" ></typed-item-section>
+      <typed-item-section v-bind:items="cocktails" type-name=""></typed-item-section>
     </div>
   </div>
 </template>
@@ -89,30 +90,46 @@ export default {
         alert(e.message)
       }
     },
-    showIngredientsDialog(id){
+    showIngredientsDialog(id) {
       this.ingrsDialogVisible = true
     },
-    tabsHandler: function(r){
-      this.page=r.tab.toLowerCase()
+    tabsHandler: function (r) {
+      this.page = r.tab.toLowerCase()
     },
-    async sendIngredient (newIngredient){
+    async sendIngredient(newIngredient) {
       const response = await axios.post(this.api_url + 'ingredients/add', newIngredient)
-      console.log(response)
-      await this.fetchIngredients()
-      this.ingrsDialogVisible = false
+          .catch(function (error) {
+            if (error.response) {
+              // Request made and server responded
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message);
+            }
+          })
+      if(response.status===200){
+        console.log(response.status.valueOf())
+        await this.fetchIngredients()
+        this.ingrsDialogVisible = false
+      }
     },
-    showSureIngredient(id){
+    showSureIngredient(id) {
       this.ingrsSureVisible = true
       this.ingrSureId = id
     },
-    sure: function(){
+    sure: function () {
       this.deleteIngredient(this.ingrSureId)
       this.ingrsSureVisible = false
     },
-    notsure: function(){
+    notsure: function () {
       this.ingrsSureVisible = false
     },
-    async deleteIngredient(id){
+    async deleteIngredient(id) {
       const response = await axios.delete(this.api_url + 'ingredients?id=' + id)
       console.log(response)
       await this.fetchIngredients()
@@ -128,9 +145,10 @@ export default {
 
 <style src="@vueform/toggle/themes/default.css"></style>
 <style scoped>
-.form-container{
+.form-container {
   width: 350px;
 }
+
 .list-container {
   width: 100%;
   display: flex;
@@ -138,7 +156,7 @@ export default {
   align-items: center;
 }
 
-.list-container div{
+.list-container div {
   width: 100%;
 }
 </style>
