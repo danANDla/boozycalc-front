@@ -2,7 +2,7 @@
   <div class="section-container">
     <div class="section-header" v-if="typeName!==''"> {{this.typeName}}  </div>
     <div class="section-body">
-      <items-grid :items="items" @addItem="addItem"></items-grid>
+      <items-grid :items="items" @addItem="addItem" @deleteItem="deleteItem"></items-grid>
     </div>
   </div>
 </template>
@@ -26,6 +26,9 @@ export default {
   methods: {
     addItem(){
       this.$emit('addItem')
+    },
+    deleteItem(id){
+      this.$emit('deleteItem', id)
     }
   }
 }

@@ -15,7 +15,7 @@
       />
     </div>
     <div v-if="page==='ingredients'">
-      <typed-item-section  v-bind:items="ingredients" type-name="" @addItem="showIngredientsDialog"></typed-item-section>
+      <typed-item-section  v-bind:items="ingredients" type-name="" @addItem="showIngredientsDialog" @deleteItem="deleteIngredient"></typed-item-section>
     </div>
     <div v-else>
       <typed-item-section v-bind:items="cocktails" type-name="" ></typed-item-section>
@@ -89,11 +89,15 @@ export default {
       this.page=r.tab.toLowerCase()
     },
     async sendIngredient (newIngredient){
-      console.log(newIngredient)
       const response = await axios.post(this.api_url + 'ingredients/add', newIngredient)
       console.log(response)
       await this.fetchIngredients()
       this.ingrsDialogVisible = false
+    },
+    async deleteIngredient(id){
+      const response = await axios.delete(this.api_url + 'ingredients?id=' + id)
+      console.log(response)
+      await this.fetchIngredients()
     }
   },
   mounted() {

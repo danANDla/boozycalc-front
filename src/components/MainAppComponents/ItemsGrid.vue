@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="nav-option">
-          <div class="nav-icon-trash">
+          <div class="nav-icon-trash" @click="deleteItem(item.id)">
             <font-awesome-icon icon="fas fa-trash"/>
           </div>
         </div>
@@ -38,6 +38,9 @@ export default {
   methods:{
     addItem(){
       this.$emit('addItem')
+    },
+    deleteItem(id){
+      this.$emit('deleteItem', id)
     }
   }
 }
