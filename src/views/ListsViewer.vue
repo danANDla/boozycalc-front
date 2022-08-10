@@ -1,7 +1,7 @@
 <template>
   <dialog-window v-model:show="ingrsDialogVisible">
     <div class="form-container">
-      <add-ingredient-form></add-ingredient-form>
+      <add-ingredient-form @submitData="sendIngredient"></add-ingredient-form>
     </div>
   </dialog-window>
 
@@ -87,6 +87,13 @@ export default {
     },
     tabsHandler: function(r){
       this.page=r.tab.toLowerCase()
+    },
+    async sendIngredient (newIngredient){
+      console.log(newIngredient)
+      const response = await axios.post(this.api_url + 'ingredients/add', newIngredient)
+      console.log(response)
+      await this.fetchIngredients()
+      this.ingrsDialogVisible = false
     }
   },
   mounted() {

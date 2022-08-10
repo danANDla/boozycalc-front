@@ -16,7 +16,7 @@
         />
       </div>
       <div class="btn-container">
-        <rect-button btn-type="purple"> add </rect-button>
+        <rect-button btn-type="purple" @click="submitData"> add </rect-button>
       </div>
     </div>
   </form>
@@ -31,6 +31,15 @@ export default {
   data(){
     return{
       ingredient:{
+        name: '',
+        description: ''
+      }
+    }
+  },
+  methods:{
+    submitData(){
+      this.$emit('submitData', this.ingredient)
+      this.ingredient = {
         name: '',
         description: ''
       }
