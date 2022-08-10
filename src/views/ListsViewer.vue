@@ -15,10 +15,10 @@
       />
     </div>
     <div v-if="page==='ingredients'">
-      <typed-item-section  v-bind:items="ingredients" type-name="Ingredients" @addItem="showIngredientsDialog"></typed-item-section>
+      <typed-item-section  v-bind:items="ingredients" type-name="" @addItem="showIngredientsDialog"></typed-item-section>
     </div>
     <div v-else>
-      <typed-item-section v-bind:items="cocktails" type-name="Cocktails" ></typed-item-section>
+      <typed-item-section v-bind:items="cocktails" type-name="" ></typed-item-section>
     </div>
   </div>
 </template>

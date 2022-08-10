@@ -1,6 +1,6 @@
 <template>
   <div class="section-container">
-    <div class="section-header"> {{this.typeName}}  </div>
+    <div class="section-header" v-if="typeName!==''"> {{this.typeName}}  </div>
     <div class="section-body">
       <items-grid :items="items" @addItem="addItem"></items-grid>
     </div>
