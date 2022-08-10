@@ -4,7 +4,11 @@
       <add-ingredient-form @submitData="sendIngredient"></add-ingredient-form>
     </div>
   </dialog-window>
-
+  <dialog-window v-model:show="ingrsSureVisible">
+    <div class="form-container">
+      <are-you-sure @sure="sure" @notsure="notsure"> delete {{ingrSureId}}</are-you-sure>
+    </div>
+  </dialog-window>
 <!--  <Toggle v-model="page"></Toggle>-->
   <div class="list-container">
     <div>
@@ -15,7 +19,7 @@
       />
     </div>
     <div v-if="page==='ingredients'">
-      <typed-item-section  v-bind:items="ingredients" type-name="" @addItem="showIngredientsDialog" @deleteItem="deleteIngredient"></typed-item-section>
+      <typed-item-section  v-bind:items="ingredients" type-name="" @addItem="showIngredientsDialog" @deleteItem="showSureIngredient"></typed-item-section>
     </div>
     <div v-else>
       <typed-item-section v-bind:items="cocktails" type-name="" ></typed-item-section>
@@ -31,6 +35,7 @@ import axios from 'axios';
 import AddIngredientForm from "@/components/AddIngredientForm";
 import RectButton from "@/components/UI/RectButton";
 import DialogWindow from "@/components/UI/DialogWindow";
+import AreYouSure from "@/components/AreYouSure";
 
 async function sendReq(url, reqMethod, params) {
   url = "http://127.0.0.1:8080/api/" + url;
@@ -51,14 +56,16 @@ async function sendReq(url, reqMethod, params) {
 
 export default {
   name: "listsViewer",
-  components: {DialogWindow, RectButton, AddIngredientForm, TypedItemSection, Toggle},
+  components: {AreYouSure, DialogWindow, RectButton, AddIngredientForm, TypedItemSection, Toggle},
   data() {
     return {
       ingredients: this.$store.state.items.ingredients,
       cocktails: this.$store.state.items.cocktails,
       api_url: "http://127.0.0.1:8080/api/",
       page: 0,
-      ingrsDialogVisible: false
+      ingrsDialogVisible: false,
+      ingrsSureVisible: false,
+      ingrSureId: Number
     }
   },
   methods: {
@@ -82,7 +89,7 @@ export default {
         alert(e.message)
       }
     },
-    showIngredientsDialog(){
+    showIngredientsDialog(id){
       this.ingrsDialogVisible = true
     },
     tabsHandler: function(r){
@@ -93,6 +100,17 @@ export default {
       console.log(response)
       await this.fetchIngredients()
       this.ingrsDialogVisible = false
+    },
+    showSureIngredient(id){
+      this.ingrsSureVisible = true
+      this.ingrSureId = id
+    },
+    sure: function(){
+      this.deleteIngredient(this.ingrSureId)
+      this.ingrsSureVisible = false
+    },
+    notsure: function(){
+      this.ingrsSureVisible = false
     },
     async deleteIngredient(id){
       const response = await axios.delete(this.api_url + 'ingredients?id=' + id)
