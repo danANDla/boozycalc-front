@@ -4,12 +4,22 @@
       <add-item-form></add-item-form>
     </div>
   </dialog-window>
-  <Toggle v-model="page"></Toggle>
-  <div class="content-container" v-if="page===true">
-    <typed-item-section v-bind:items="ingredients" type-name="Ingredients" @addItem="showIngredientsDialog"></typed-item-section>
-  </div>
-  <div class="content-container" v-else>
-    <typed-item-section v-bind:items="cocktails" type-name="Cocktails" ></typed-item-section>
+
+<!--  <Toggle v-model="page"></Toggle>-->
+  <div class="list-container">
+    <div>
+      <my-tabz
+          :data="['Cocktails', 'Ingredients']"
+          main-color="#CFE5EE"
+          @clickedTab="tabsHandler"
+      />
+    </div>
+    <div v-if="page==='ingredients'">
+      <typed-item-section  v-bind:items="ingredients" type-name="Ingredients" @addItem="showIngredientsDialog"></typed-item-section>
+    </div>
+    <div v-else>
+      <typed-item-section v-bind:items="cocktails" type-name="Cocktails" ></typed-item-section>
+    </div>
   </div>
 </template>
 
@@ -47,7 +57,7 @@ export default {
       ingredients: this.$store.state.items.ingredients,
       cocktails: this.$store.state.items.cocktails,
       api_url: "http://127.0.0.1:8080/api/",
-      page: false,
+      page: 0,
       dialogVisible: false
     }
   },
@@ -74,6 +84,9 @@ export default {
     },
     showIngredientsDialog(){
       this.dialogVisible = true
+    },
+    tabsHandler: function(r){
+      this.page=r.tab.toLowerCase()
     }
   },
   mounted() {
@@ -86,12 +99,17 @@ export default {
 
 <style src="@vueform/toggle/themes/default.css"></style>
 <style scoped>
-.content-container {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
 .form-container{
   width: 350px;
+}
+.list-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-container div{
+  width: 100%;
 }
 </style>
