@@ -63,26 +63,8 @@ export default {
         alert(e.message)
       }
     },
-    // updateIngredients(){
-    //   console.log("FUNC: updateIngredients")
-    //   sendReq("ingredients/all", "GET", "")
-    //       .then(response => {
-    //         if(response.status == 401){
-    //           console.log("401 error")
-    //         }
-    //         return response
-    //       })
-    //       .then(response => response.json())
-    //       .then(data =>{
-    //         console.log("Received:")
-    //         console.log(data)
-    //         this.$store.commit('items/updateIngredients', data)
-    //         this.items = this.$store.state.items.ingredients
-    //       })
-    // },
   },
   mounted() {
-    // this.updateIngredients();
     console.log("Fetching")
     this.fetchIngredients()
     this.fetchCocktails()
