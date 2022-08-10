@@ -19,6 +19,9 @@
         <div>{{ item.description }}</div>
       </div>
     </div>
+    <div class="add-item-btn-container">
+      <font-awesome-icon icon="fas fa-plus"></font-awesome-icon>
+    </div>
 
   </div>
 </template>
@@ -48,7 +51,7 @@ export default {
   width: 1px;
 }
 
-.item-container {
+.item-container, .add-item-btn-container{
   background-color: #69AAB8;
   font-size: 20px;
   border: skyblue 1px solid;
@@ -56,6 +59,19 @@ export default {
 
   display: grid;
   grid-template-rows: 40px 1fr;
+}
+
+.add-item-btn-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  font-size: 30px;
+}
+
+.add-item-btn-container:hover{
+  background-color: #CFE5EE;
+  color: skyblue;
 }
 
 .item-navbar {
