@@ -1,5 +1,5 @@
 <template>
-  <dialog-window v-model:show="dialogVisible">
+  <dialog-window v-model:show="ingrsDialogVisible">
     <div class="form-container">
       <add-item-form></add-item-form>
     </div>
@@ -58,7 +58,7 @@ export default {
       cocktails: this.$store.state.items.cocktails,
       api_url: "http://127.0.0.1:8080/api/",
       page: 0,
-      dialogVisible: false
+      ingrsDialogVisible: false
     }
   },
   methods: {
@@ -83,7 +83,7 @@ export default {
       }
     },
     showIngredientsDialog(){
-      this.dialogVisible = true
+      this.ingrsDialogVisible = true
     },
     tabsHandler: function(r){
       this.page=r.tab.toLowerCase()
