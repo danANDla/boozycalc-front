@@ -1,7 +1,7 @@
 <template>
   <dialog-window v-model:show="ingrsDialogVisible">
     <div class="form-container">
-      <add-item-form></add-item-form>
+      <add-ingredient-form></add-ingredient-form>
     </div>
   </dialog-window>
 
@@ -28,7 +28,7 @@
 import TypedItemSection from "@/components/MainAppComponents/TypedItemSection";
 import Toggle from "@vueform/toggle"
 import axios from 'axios';
-import AddItemForm from "@/components/AddItemForm";
+import AddIngredientForm from "@/components/AddIngredientForm";
 import RectButton from "@/components/UI/RectButton";
 import DialogWindow from "@/components/UI/DialogWindow";
 
@@ -51,7 +51,7 @@ async function sendReq(url, reqMethod, params) {
 
 export default {
   name: "listsViewer",
-  components: {DialogWindow, RectButton, AddItemForm, TypedItemSection, Toggle},
+  components: {DialogWindow, RectButton, AddIngredientForm, TypedItemSection, Toggle},
   data() {
     return {
       ingredients: this.$store.state.items.ingredients,

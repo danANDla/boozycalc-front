@@ -26,7 +26,7 @@
 import MyInput from "@/components/UI/MyInput";
 import RectButton from "@/components/UI/RectButton";
 export default {
-  name: "AddItemForm",
+  name: "AddIngredientForm",
   components: {RectButton, MyInput},
   data(){
     return{
