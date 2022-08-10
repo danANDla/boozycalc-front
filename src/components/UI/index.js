@@ -3,5 +3,5 @@ import menuNavButton from "@/components/UI/MenuNavButton";
 
 export default [
     button,
-    menuNavButton
+    menuNavButton,
 ];

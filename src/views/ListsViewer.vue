@@ -1,20 +1,26 @@
 <template>
-  <div class="content-container">
-    <typed-item-section v-bind:items="ingredients" type-name="type 1"> </typed-item-section>
+  <Toggle v-model="page"></Toggle>
+  <div class="content-container" v-if="page===true">
+    <typed-item-section v-bind:items="ingredients" type-name="Ingredients"></typed-item-section>
+  </div>
+  <div class="content-container" v-else>
+    <typed-item-section v-bind:items="cocktails" type-name="Cocktails"></typed-item-section>
   </div>
 </template>
 
 <script>
 
-import RectButton from "@/components/UI/RectButton";
-async function sendReq(url, reqMethod, params){
+import TypedItemSection from "@/components/MainAppComponents/TypedItemSection";
+import Toggle from "@vueform/toggle"
+import axios from 'axios';
+
+async function sendReq(url, reqMethod, params) {
   url = "http://127.0.0.1:8080/api/" + url;
-  if(reqMethod === "GET"){
+  if (reqMethod === "GET") {
     return await fetch(url, {
       method: reqMethod,
     })
-  }
-  else{
+  } else {
     return await fetch(url, {
       method: reqMethod,
       headers: {
@@ -25,26 +31,35 @@ async function sendReq(url, reqMethod, params){
   }
 }
 
-import TypedItemSection from "@/components/MainAppComponents/TypedItemSection";
-import axios from 'axios';
-
 export default {
   name: "listsViewer",
-  components: {RectButton, TypedItemSection},
-  data(){
-    return{
+  components: {TypedItemSection, Toggle},
+  data() {
+    return {
       ingredients: this.$store.state.items.ingredients,
-      api_url: "http://127.0.0.1:8080/api/"
+      cocktails: this.$store.state.items.cocktails,
+      api_url: "http://127.0.0.1:8080/api/",
+      page: false
     }
   },
-  methods:{
-    async fetchIngredients(){
-      try{
+  methods: {
+    async fetchIngredients() {
+      try {
         const response = await axios.get(this.api_url + 'ingredients/all')
         console.log(response)
         this.$store.commit("items/updateIngredients", response.data)
         this.ingredients = this.$store.state.items.ingredients
-      } catch (e){
+      } catch (e) {
+        alert(e.message)
+      }
+    },
+    async fetchCocktails() {
+      try {
+        const response = await axios.get(this.api_url + 'cocktails/all')
+        console.log(response)
+        this.$store.commit("items/updateCocktails", response.data)
+        this.cocktails = this.$store.state.items.cocktails
+      } catch (e) {
         alert(e.message)
       }
     },
@@ -66,16 +81,18 @@ export default {
     //       })
     // },
   },
-  mounted(){
+  mounted() {
     // this.updateIngredients();
     console.log("Fetching")
     this.fetchIngredients()
+    this.fetchCocktails()
   }
 }
 </script>
 
+<style src="@vueform/toggle/themes/default.css"></style>
 <style scoped>
-.content-container{
+.content-container {
   display: flex;
   flex-direction: column;
   gap: 18px;
