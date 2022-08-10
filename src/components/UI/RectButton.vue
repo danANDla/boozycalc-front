@@ -8,20 +8,20 @@
 export default {
   name: "rect-button",
   props: {
-    btnTyoe: String
+    btnType: String
   },
   computed:{
     dangerous: function (){
-      return this.btnTyoe === 'dangerous'
+      return this.btnType === 'dangerous'
     },
     purple: function (){
-      return this.btnTyoe === 'purple'
+      return this.btnType === 'purple'
     },
     safe: function (){
-      return this.btnTyoe === 'safe'
+      return this.btnType === 'safe'
     },
     red: function (){
-      return this.btnTyoe === 'red'
+      return this.btnType === 'red'
     },
   }
 
@@ -55,13 +55,13 @@ button.isDangerous:hover {
 }
 
 button.isPurple {
-  border: 0.1em solid #8f8fff;
+  border: 0.1em solid skyblue;
   color: #FFFFFF;
-  background-color: #8f8fff;
+  background-color: skyblue;
 }
 
 button.isPurple:hover {
-  color: #000000;
+  color: #3D5E6B;
   background-color: #ffffff;
   border: 0.1em solid #FFFFFF;
 }
