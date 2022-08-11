@@ -1,22 +1,22 @@
 <template>
   <div class="grid-container">
 
-    <div class="item-container" v-for="item in items">
+    <div :class="[this.isRed[index]===0 ? itemContainer : redItemContainer]" v-for="(item,index) in items" :ref="setItemRef">
       <div class="item-navbar">
         <div class="nav-option">
           <div class="nav-icon">
             <font-awesome-icon icon="fa-solid fa-bars"/>
           </div>
         </div>
-        <div class="nav-option">
+        <div class="nav-option" @mouseover="this.makeRed(index)" @mouseleave="this.makeNotRed(index)">
           <div class="nav-icon-trash" @click="deleteItem(item.id)">
             <font-awesome-icon icon="fas fa-trash"/>
           </div>
         </div>
       </div>
       <div class="item-body">
-        <div>{{ item.name }}</div>
-        <div>{{ item.description }}</div>
+        <div class="item-name">{{ item.name }}</div>
+        <div class="item-info">{{ item.description }}</div>
       </div>
     </div>
     <div class="add-item-btn-container" @click="addItem">
@@ -35,13 +35,39 @@ export default {
       required: true
     }
   },
+  data(){
+    return {
+      itemRefs:[],
+      isRed:[],
+      itemContainer: 'item-container',
+      redItemContainer: 'red-item-container'
+    }
+  },
   methods:{
+    setItemRef(el) {
+      if (el) {
+        this.itemRefs.push(el)
+        this.isRed.push(0)
+      }
+    },
     addItem(){
       this.$emit('addItem')
     },
     deleteItem(id){
       this.$emit('deleteItem', id)
+    },
+    makeRed: function(index){
+      this.isRed[index] = 1
+    },
+    makeNotRed: function(index){
+      this.isRed[index] = 0
     }
+  },
+  beforeUpdate() {
+    this.itemRefs = []
+  },
+  updated() {
+    console.log(this.itemRefs)
   }
 }
 </script>
@@ -64,9 +90,19 @@ export default {
   font-size: 20px;
   border: skyblue 1px solid;
   height: 200px;
-
   display: grid;
   grid-template-rows: 40px 1fr;
+  transition: all 0.2s;
+}
+
+.red-item-container{
+  background-color: darkred;
+  font-size: 20px;
+  border: skyblue 1px solid;
+  height: 200px;
+  display: grid;
+  grid-template-rows: 40px 1fr;
+  transition: all 0.5s;
 }
 
 .add-item-btn-container{
@@ -99,20 +135,27 @@ export default {
 }
 
 .item-body {
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.item-body div{
+  width: 100%;
+}
+
+.item-info{
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .item-container {
-  pointer-events: none;
-  transition: all 0.2s;
 }
 
-.nav-option > .nav-icon-trash  {
-  pointer-events: auto;
-}
-
-.item-container:hover {
-  background: darkred;
+.item-name{
+  font-size: x-large;
+  font-weight: bold;
 }
 </style>
