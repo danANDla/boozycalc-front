@@ -1,7 +1,8 @@
 <template>
   <div class="grid-container">
 
-    <div :class="[this.isRed[index]===0 ? itemContainer : redItemContainer]" v-for="(item,index) in items" :ref="setItemRef">
+    <div :class="[this.isRed[index]===0 ? itemContainer : redItemContainer]" v-for="(item,index) in items"
+         :ref="setItemRef">
       <div class="item-navbar">
         <div class="nav-option">
           <div class="nav-icon">
@@ -35,31 +36,31 @@ export default {
       required: true
     }
   },
-  data(){
+  data() {
     return {
-      itemRefs:[],
-      isRed:[],
+      itemRefs: [],
+      isRed: [],
       itemContainer: 'item-container',
       redItemContainer: 'red-item-container'
     }
   },
-  methods:{
+  methods: {
     setItemRef(el) {
       if (el) {
         this.itemRefs.push(el)
         this.isRed.push(0)
       }
     },
-    addItem(){
+    addItem() {
       this.$emit('addItem')
     },
-    deleteItem(id){
+    deleteItem(id) {
       this.$emit('deleteItem', id)
     },
-    makeRed: function(index){
+    makeRed: function (index) {
       this.isRed[index] = 1
     },
-    makeNotRed: function(index){
+    makeNotRed: function (index) {
       this.isRed[index] = 0
     }
   },
@@ -85,7 +86,7 @@ export default {
   width: 1px;
 }
 
-.item-container, .add-item-btn-container{
+.item-container, .add-item-btn-container {
   background-color: #69AAB8;
   font-size: 20px;
   border: skyblue 1px solid;
@@ -95,7 +96,7 @@ export default {
   transition: all 0.2s;
 }
 
-.red-item-container{
+.red-item-container {
   background-color: darkred;
   font-size: 20px;
   border: skyblue 1px solid;
@@ -105,7 +106,7 @@ export default {
   transition: all 0.5s;
 }
 
-.add-item-btn-container{
+.add-item-btn-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,7 +114,7 @@ export default {
   font-size: 30px;
 }
 
-.add-item-btn-container:hover{
+.add-item-btn-container:hover {
   background-color: #CFE5EE;
   color: skyblue;
 }
@@ -142,11 +143,11 @@ export default {
   overflow-y: scroll;
 }
 
-.item-body div{
+.item-body div {
   width: 100%;
 }
 
-.item-info{
+.item-info {
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -154,7 +155,7 @@ export default {
 .item-container {
 }
 
-.item-name{
+.item-name {
   font-size: x-large;
   font-weight: bold;
 }

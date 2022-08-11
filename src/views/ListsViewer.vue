@@ -112,7 +112,7 @@ export default {
               console.log('Error', error.message);
             }
           })
-      if(response.status===200){
+      if (response.status === 200) {
         console.log(response.status.valueOf())
         await this.fetchIngredients()
         this.ingrsDialogVisible = false
