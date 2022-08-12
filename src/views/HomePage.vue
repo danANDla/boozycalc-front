@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import TypedItemSection from "@/components/MainAppComponents/TypedItemSection";
-import ItemsGrid from "@/components/MainAppComponents/ItemsGrid";
+import TypedItemSection from "@/components/listsViewer/TypedItemSection";
+import ItemsGrid from "@/components/listsViewer/ItemsGrid";
 import RectButton from "@/components/UI/RectButton";
 import NavMenu from "@/components/NavMenu";
 import BoozyHeader from "@/components/TheHeader";
@@ -29,8 +29,7 @@ import BoozyHeader from "@/components/TheHeader";
 export default {
   name: "BasicTemplate",
   components: {BoozyHeader, RectButton, ItemsGrid, TypedItemSection, NavMenu},
-  methods: {
-  }
+  methods: {}
 }
 </script>
 

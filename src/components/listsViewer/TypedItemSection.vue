@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ItemsGrid from "@/components/MainAppComponents/ItemsGrid";
+import ItemsGrid from "@/components/listsViewer/ItemsGrid";
 
 export default {
   name: "TypedItemSection",

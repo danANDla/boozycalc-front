@@ -30,7 +30,7 @@
 
 <script>
 
-import TypedItemSection from "@/components/MainAppComponents/TypedItemSection";
+import TypedItemSection from "@/components/listsViewer/TypedItemSection";
 import Toggle from "@vueform/toggle"
 import axios from 'axios';
 import AddIngredientForm from "@/components/AddIngredientForm";
