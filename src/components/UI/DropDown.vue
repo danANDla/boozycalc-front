@@ -3,8 +3,8 @@
     <option disabled value=""><slot></slot></option>
     <option
         v-for="item in itemList"
-        :key="item.name"
-        :value="item.name">
+        :key="item.id"
+        :value="item.id">
       {{item.name}}
     </option>
   </select>
@@ -15,7 +15,7 @@ export default {
   name: "DropDown",
   props: {
     modelValue:{
-      type: String,
+      type: Number,
     },
     itemList: {
       type: Array,
@@ -24,7 +24,7 @@ export default {
   },
   methods:{
     changeItem(event){
-      this.$emit('update:modelValue', event.target.value)
+      this.$emit('update:modelValue', parseInt(event.target.value))
     }
   }
 }

@@ -13,7 +13,18 @@
       <are-you-sure @sure="sure" @notsure="notsure"> Are you sure you want to delete {{ ingrSureName }}?</are-you-sure>
     </div>
   </dialog-window>
-  <!--  <Toggle v-model="page"></Toggle>-->
+
+  <dialog-window v-model:show="cocksDialogVisible">
+    <div class="form-container">
+      <add-cocktail-form @submitData="sendCocktail"
+                           @input="this.cockAddIsError = false; this.cockAddErrorText=''"
+                           :is-error="cockAddIsError"
+                           :error-text="cockAddErrorText"
+                           :ingredients="ingredients">
+      </add-cocktail-form>
+    </div>
+  </dialog-window>
+
   <div class="list-container">
     <div>
       <my-tabz
@@ -27,7 +38,7 @@
                           @deleteItem="showSureIngredient"></typed-item-section>
     </div>
     <div v-else>
-      <typed-item-section v-bind:items="cocktails" type-name=""></typed-item-section>
+      <typed-item-section v-bind:items="cocktails" type-name="" @addItem="showCocktailsDialog"></typed-item-section>
     </div>
   </div>
 </template>
@@ -40,6 +51,7 @@ import axios from 'axios';
 import AddIngredientForm from "@/components/listsViewer/AddIngredientForm";
 import RectButton from "@/components/UI/RectButton";
 import DialogWindow from "@/components/UI/DialogWindow";
+import AddCocktailForm from "@/components/listsViewer/AddCocktailForm";
 
 async function sendReq(url, reqMethod, params) {
   url = "http://127.0.0.1:8080/api/" + url;
@@ -60,7 +72,7 @@ async function sendReq(url, reqMethod, params) {
 
 export default {
   name: "listsViewer",
-  components: {DialogWindow, RectButton, AddIngredientForm, TypedItemSection, Toggle},
+  components: {AddCocktailForm, DialogWindow, RectButton, AddIngredientForm, TypedItemSection, Toggle},
   data() {
     return {
       ingredients: this.$store.state.items.ingredients,
@@ -72,7 +84,10 @@ export default {
       ingrSureName: String,
       ingrSureId: Boolean,
       ingrAddIsError: false,
-      ingrAddErrorText: ""
+      ingrAddErrorText: "",
+      cocksDialogVisible: false,
+      cockAddIsError: false,
+      cockAddErrorText: ""
     }
   },
   methods: {
@@ -155,6 +170,14 @@ export default {
       const response = await axios.delete(this.api_url + 'ingredients?id=' + id)
       console.log(response)
       await this.fetchIngredients()
+    },
+    showCocktailsDialog(){
+      this.cockAddIsError = false
+      this.cockAddErrorText = ""
+      this.cocksDialogVisible = true
+    },
+    async sendCocktail(newCocktail){
+      console.log(newCocktail)
     }
   },
   mounted() {

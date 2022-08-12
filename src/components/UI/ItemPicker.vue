@@ -1,15 +1,15 @@
 <template>
-  <div class="container">
-    <div :class="[this.isRed[index]===0 ? itemContainer : redItemContainer]" v-for="(item,index) in picked"
+  <div class="picker-container">
+    <div :class="[this.isRed[index]===0 ? itemContainer : redItemContainer]" v-for="(item,index) in pickedItems"
          :ref="setItemRef">
       <div>
-        <drop-down v-model="picked[index].name" :itemList="itemList">
+        <drop-down v-model="pickedItems[index].id" :itemList="itemList">
           choose ingredient
         </drop-down>
       </div>
       <div>
         <my-input
-            v-model="picked[index].amount"
+            v-model="pickedItems[index].amount"
             type="number"
             placeholder="amount ml/gr"
         />
@@ -38,6 +38,10 @@ export default {
     itemList: {
       type: Array,
       required: true
+    },
+    pickedItems:{
+      type: Array,
+      default: () => []
     }
   },
   data(){
@@ -46,7 +50,6 @@ export default {
       isRed: [],
       itemContainer: 'item-container',
       redItemContainer: 'red-item-container',
-      picked: [],
     }
   },
   methods:{
@@ -57,7 +60,7 @@ export default {
       }
     },
     deleteItem(index) {
-      this.picked.splice(index, 1)
+      this.pickedItems.splice(index, 1)
     },
     makeRed: function (index) {
       this.isRed[index] = 1
@@ -66,16 +69,15 @@ export default {
       this.isRed[index] = 0
     },
     addItem:function (){
-      this.picked.push({name: "", amount: 0})
-      console.log(this.picked)
+      this.pickedItems.push({ingredientId: 0, amount: 0})
     }
   }
 }
 </script>
 
 <style scoped>
-.container{
-  padding: 10px;
+.picker-container{
+  width: 100%;
 }
 .item-container {
   background-color: #3D5E6B;
@@ -94,7 +96,7 @@ export default {
 }
 
 .item-container div, .red-item-container div{
-  padding: 5px 10px;
+  padding: 5px 3px;
 }
 
 .add-item-btn-container {
