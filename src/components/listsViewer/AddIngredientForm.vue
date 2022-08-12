@@ -85,4 +85,10 @@ form{
   justify-content: end;
   align-items: center;
 }
+
+.error-container{
+  text-align: center;
+  font-size: 15px;
+  color: #d4aa70;
+}
 </style>
