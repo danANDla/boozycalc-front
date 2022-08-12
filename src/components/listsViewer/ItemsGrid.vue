@@ -67,9 +67,6 @@ export default {
   beforeUpdate() {
     this.itemRefs = []
   },
-  updated() {
-    console.log(this.itemRefs)
-  }
 }
 </script>
 
@@ -99,7 +96,7 @@ export default {
 .red-item-container {
   background-color: darkred;
   font-size: 20px;
-  border: skyblue 1px solid;
+  border: darkred 1px solid;
   height: 200px;
   display: grid;
   grid-template-rows: 40px 1fr;
