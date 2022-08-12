@@ -10,18 +10,27 @@
   </dialog-window>
   <dialog-window v-model:show="ingrsSureVisible">
     <div class="form-container">
-      <are-you-sure @sure="sure" @notsure="notsure"> Are you sure you want to delete {{ ingrSureName }}?</are-you-sure>
+      <are-you-sure @sure="sure('ingrs', ingrSureId)" @notsure="notsure('ingrs')"> Are you sure you want to delete
+        {{ ingrSureName }}?
+      </are-you-sure>
     </div>
   </dialog-window>
 
   <dialog-window v-model:show="cocksDialogVisible">
     <div class="form-container">
       <add-cocktail-form @submitData="sendCocktail"
-                           @input="this.cockAddIsError = false; this.cockAddErrorText=''"
-                           :is-error="cockAddIsError"
-                           :error-text="cockAddErrorText"
-                           :ingredients="ingredients">
+                         @input="this.cocksAddIsError = false; this.cocksAddErrorText=''"
+                         :is-error="cocksAddIsError"
+                         :error-text="cocksAddErrorText"
+                         :ingredients="ingredients">
       </add-cocktail-form>
+    </div>
+  </dialog-window>
+  <dialog-window v-model:show="cocksSureVisible">
+    <div class="form-container">
+      <are-you-sure @sure="sure('cocks', cocksSureId)" @notsure="notsure('cocks')"> Are you sure you want to delete
+        {{ cocksSureName }}?
+      </are-you-sure>
     </div>
   </dialog-window>
 
@@ -38,7 +47,8 @@
                           @deleteItem="showSureIngredient"></typed-item-section>
     </div>
     <div v-else>
-      <typed-item-section v-bind:items="cocktails" type-name="" @addItem="showCocktailsDialog"></typed-item-section>
+      <typed-item-section v-bind:items="cocktails" type-name="" @addItem="showCocktailsDialog"
+                          @deleteItem="showSureCocktail"></typed-item-section>
     </div>
   </div>
 </template>
@@ -82,12 +92,16 @@ export default {
       ingrsDialogVisible: false,
       ingrsSureVisible: false,
       ingrSureName: String,
-      ingrSureId: Boolean,
+      ingrSureId: Number,
       ingrAddIsError: false,
       ingrAddErrorText: "",
+
+      cocksSureVisible: false,
       cocksDialogVisible: false,
-      cockAddIsError: false,
-      cockAddErrorText: ""
+      cocksSureName: String,
+      cocksSureId: Number,
+      cocksAddIsError: false,
+      cocksAddErrorText: ""
     }
   },
   methods: {
@@ -123,7 +137,7 @@ export default {
       let status = false
       let errorText = ""
       await axios.post(this.api_url + 'ingredients/add', newIngredient)
-          .then(function(response){
+          .then(function (response) {
             status = true;
             console.log(response.status.valueOf())
           })
@@ -143,8 +157,7 @@ export default {
       if (status === true) {
         await this.fetchIngredients()
         this.ingrsDialogVisible = false
-      }
-      else{
+      } else {
         console.log("is Error")
         this.ingrAddIsError = true
         this.ingrAddErrorText = errorText
@@ -155,56 +168,69 @@ export default {
       this.ingrSureName = name
       this.ingrsSureVisible = true
     },
-    sure: function () {
-      this.deleteIngredient(this.ingrSureId)
-      this.ingrsSureVisible = false
-      this.ingrSureId = -1
-      this.ingrSureName = ""
+    sure: function (type, id) {
+      if (type === 'ingrs') {
+        this.deleteIngredient(id)
+        this.ingrsSureVisible = false
+        this.ingrSureId = -1
+        this.ingrSureName = ""
+      } else {
+        console.log(type + ' ' + id)
+        this.deleteCocktail(id)
+        this.cocksSureVisible = false
+        this.cocksSureId = -1
+        this.cockSureName = ""
+      }
     },
-    notsure: function () {
-      this.ingrsSureVisible = false
-      this.ingrSureId = -1
-      this.ingrSureName = ""
+    notsure: function (type) {
+      if (type === 'ingrs') {
+        this.ingrsSureVisible = false
+        this.ingrSureId = -1
+        this.ingrSureName = ""
+      } else {
+        this.cocksSureVisible = false
+        this.cocksSureId = -1
+        this.cockSureName = ""
+      }
     },
     async deleteIngredient(id) {
       const response = await axios.delete(this.api_url + 'ingredients?id=' + id)
       console.log(response)
       await this.fetchIngredients()
     },
-    showCocktailsDialog(){
-      this.cockAddIsError = false
-      this.cockAddErrorText = ""
+    showCocktailsDialog() {
+      this.cocksAddIsError = false
+      this.cocksAddErrorText = ""
       this.cocksDialogVisible = true
     },
-    async sendCocktail(newCocktail){
+    async sendCocktail(newCocktail) {
       let badNewItem = false
-      if(newCocktail.ingredients.length === 0){
-        this.cockAddIsError = true
+      if (newCocktail.ingredients.length === 0) {
+        this.cocksAddIsError = true
         badNewItem = true
-        this.cockAddErrorText = "empty recipe"
-      }
-      else{
-        for(let t in newCocktail.ingredients){
+        this.cocksAddErrorText = "empty recipe"
+      } else {
+        for (let t in newCocktail.ingredients) {
           console.log(newCocktail.ingredients[t].ingredientId)
-          if(newCocktail.ingredients[t].ingredientId === -1 || newCocktail.ingredients[t].amount <= 0){
-            this.cockAddIsError = true
+          if (newCocktail.ingredients[t].ingredientId === -1 || newCocktail.ingredients[t].amount <= 0) {
+            this.cocksAddIsError = true
             badNewItem = true
-            this.cockAddErrorText = "bad ingredient pick"
+            this.cocksAddErrorText = "bad ingredient pick"
           }
         }
       }
-      if(newCocktail.name === ""){
+      if (newCocktail.name === "") {
 
-        this.cockAddIsError = true
+        this.cocksAddIsError = true
         badNewItem = true
-        this.cockAddErrorText = "empty name field"
+        this.cocksAddErrorText = "empty name field"
       }
-      if(!badNewItem){
+      if (!badNewItem) {
         console.log(newCocktail)
         let status = false
         let errorText = ""
         await axios.post(this.api_url + 'cocktails/add', newCocktail)
-            .then(function(response){
+            .then(function (response) {
               status = true;
               console.log(response.status.valueOf())
             })
@@ -224,14 +250,24 @@ export default {
         if (status === true) {
           await this.fetchCocktails()
           this.cocksDialogVisible = false
-        }
-        else{
+        } else {
           console.log("is Error")
-          this.cockAddIsError = true
-          this.cockAddErrorText = errorText
+          this.cocksAddIsError = true
+          this.cocksAddErrorText = errorText
         }
       }
-    }
+    },
+    showSureCocktail(id, name) {
+      this.cocksSureId = id
+      this.cocksSureName = name
+      this.cocksSureVisible = true
+      console.log('trying delete ' + id)
+    },
+    async deleteCocktail(id) {
+      const response = await axios.delete(this.api_url + 'cocktails?id=' + id)
+      console.log(response)
+      await this.fetchCocktails()
+    },
   },
   mounted() {
     console.log("Fetching")
