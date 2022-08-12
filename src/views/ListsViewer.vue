@@ -177,6 +177,17 @@ export default {
       this.cocksDialogVisible = true
     },
     async sendCocktail(newCocktail){
+      for(let t in newCocktail.ingredients){
+        console.log(newCocktail.ingredients[t].ingredientId)
+        if(newCocktail.ingredients[t].ingredientId === -1 || newCocktail.ingredients[t].amount <= 0){
+          this.cockAddIsError = true
+          this.cockAddErrorText = "bad ingredient pick"
+        }
+      }
+      if(newCocktail.name === ""){
+        this.cockAddIsError = true
+        this.cockAddErrorText = "empty name field"
+      }
       console.log(newCocktail)
     }
   },

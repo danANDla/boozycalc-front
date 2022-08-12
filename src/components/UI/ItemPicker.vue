@@ -3,7 +3,7 @@
     <div :class="[this.isRed[index]===0 ? itemContainer : redItemContainer]" v-for="(item,index) in pickedItems"
          :ref="setItemRef">
       <div>
-        <drop-down v-model="pickedItems[index].id" :itemList="itemList">
+        <drop-down v-model="pickedItems[index].ingredientId" :itemList="itemList">
           choose ingredient
         </drop-down>
       </div>
@@ -11,7 +11,7 @@
         <my-input
             v-model="pickedItems[index].amount"
             type="number"
-            placeholder="amount ml/gr"
+            placeholder="ml/gr"
         />
       </div>
       <div class="item-navbar">
@@ -69,7 +69,7 @@ export default {
       this.isRed[index] = 0
     },
     addItem:function (){
-      this.pickedItems.push({ingredientId: 0, amount: 0})
+      this.pickedItems.push({ingredientId: -1, amount: ""})
     }
   }
 }
