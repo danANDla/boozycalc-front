@@ -28,8 +28,8 @@ export default {
     addItem() {
       this.$emit('addItem')
     },
-    deleteItem(id) {
-      this.$emit('deleteItem', id)
+    deleteItem(id, name) {
+      this.$emit('deleteItem', id, name)
     }
   }
 }

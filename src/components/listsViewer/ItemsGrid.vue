@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="nav-option" @mouseover="this.makeRed(index)" @mouseleave="this.makeNotRed(index)">
-          <div class="nav-icon-trash" @click="deleteItem(item.id)">
+          <div class="nav-icon-trash" @click="deleteItem(item.id, item.name)">
             <font-awesome-icon icon="fas fa-trash"/>
           </div>
         </div>
@@ -54,8 +54,8 @@ export default {
     addItem() {
       this.$emit('addItem')
     },
-    deleteItem(id) {
-      this.$emit('deleteItem', id)
+    deleteItem(id, name) {
+      this.$emit('deleteItem', id, name)
     },
     makeRed: function (index) {
       this.isRed[index] = 1

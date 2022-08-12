@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="question">
-      are you sure?
       <slot></slot>
     </div>
     <div class="btns">

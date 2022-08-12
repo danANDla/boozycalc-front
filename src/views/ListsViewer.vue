@@ -6,7 +6,7 @@
   </dialog-window>
   <dialog-window v-model:show="ingrsSureVisible">
     <div class="form-container">
-      <are-you-sure @sure="sure" @notsure="notsure"> delete {{ ingrSureId }}</are-you-sure>
+      <are-you-sure @sure="sure" @notsure="notsure"> Are you sure you want to delete {{ ingrSureName }}?</are-you-sure>
     </div>
   </dialog-window>
   <!--  <Toggle v-model="page"></Toggle>-->
@@ -33,7 +33,7 @@
 import TypedItemSection from "@/components/listsViewer/TypedItemSection";
 import Toggle from "@vueform/toggle"
 import axios from 'axios';
-import AddIngredientForm from "@/components/AddIngredientForm";
+import AddIngredientForm from "@/components/listsViewer/AddIngredientForm";
 import RectButton from "@/components/UI/RectButton";
 import DialogWindow from "@/components/UI/DialogWindow";
 import AreYouSure from "@/components/AreYouSure";
@@ -66,7 +66,8 @@ export default {
       page: 0,
       ingrsDialogVisible: false,
       ingrsSureVisible: false,
-      ingrSureId: Number
+      ingrSureName: String,
+      ingrSureId: Boolean
     }
   },
   methods: {
@@ -118,16 +119,21 @@ export default {
         this.ingrsDialogVisible = false
       }
     },
-    showSureIngredient(id) {
-      this.ingrsSureVisible = true
+    showSureIngredient(id, name) {
       this.ingrSureId = id
+      this.ingrSureName = name
+      this.ingrsSureVisible = true
     },
     sure: function () {
       this.deleteIngredient(this.ingrSureId)
       this.ingrsSureVisible = false
+      this.ingrSureId = -1
+      this.ingrSureName = ""
     },
     notsure: function () {
       this.ingrsSureVisible = false
+      this.ingrSureId = -1
+      this.ingrSureName = ""
     },
     async deleteIngredient(id) {
       const response = await axios.delete(this.api_url + 'ingredients?id=' + id)
