@@ -36,7 +36,6 @@ import axios from 'axios';
 import AddIngredientForm from "@/components/listsViewer/AddIngredientForm";
 import RectButton from "@/components/UI/RectButton";
 import DialogWindow from "@/components/UI/DialogWindow";
-import AreYouSure from "@/components/AreYouSure";
 
 async function sendReq(url, reqMethod, params) {
   url = "http://127.0.0.1:8080/api/" + url;
@@ -57,7 +56,7 @@ async function sendReq(url, reqMethod, params) {
 
 export default {
   name: "listsViewer",
-  components: {AreYouSure, DialogWindow, RectButton, AddIngredientForm, TypedItemSection, Toggle},
+  components: {DialogWindow, RectButton, AddIngredientForm, TypedItemSection, Toggle},
   data() {
     return {
       ingredients: this.$store.state.items.ingredients,
