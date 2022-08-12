@@ -6,10 +6,10 @@
 
     <ul class="nav">
       <li>
-        <router-link to="/"> Home </router-link>
+        <router-link to="/"> welcome </router-link>
       </li>
       <li>
-        <router-link to="/"> Log in </router-link>
+        <router-link to="/"> log in </router-link>
       </li>
     </ul>
   </div>
