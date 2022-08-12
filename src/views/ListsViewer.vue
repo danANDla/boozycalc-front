@@ -2,6 +2,7 @@
   <dialog-window v-model:show="ingrsDialogVisible">
     <div class="form-container">
       <add-ingredient-form @submitData="sendIngredient"
+                           @input="this.ingrAddIsError = false; this.ingrAddErrorText=''"
                            :is-error="ingrAddIsError"
                            :error-text="ingrAddErrorText">
       </add-ingredient-form>
@@ -96,6 +97,8 @@ export default {
       }
     },
     showIngredientsDialog(id) {
+      this.ingrAddIsError = false
+      this.ingrAddErrorText = ""
       this.ingrsDialogVisible = true
     },
     tabsHandler: function (r) {
@@ -123,8 +126,6 @@ export default {
             }
           })
       if (status === true) {
-        this.ingrAddIsError = false
-        this.ingrAddErrorText = ""
         await this.fetchIngredients()
         this.ingrsDialogVisible = false
       }
