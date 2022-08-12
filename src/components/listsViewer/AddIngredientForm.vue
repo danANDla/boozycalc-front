@@ -1,6 +1,9 @@
 <template>
   <form @submit.prevent>
     <div class="container">
+      <div class="error-container" v-if="isError">
+        {{errorText}}
+      </div>
       <div>
         <my-input
             v-model="ingredient.name"
@@ -28,6 +31,16 @@ import RectButton from "@/components/UI/RectButton";
 export default {
   name: "AddIngredientForm",
   components: {RectButton, MyInput},
+  props:{
+    isError:{
+      type: Boolean,
+      default: false
+    },
+    errorText:{
+      type: String,
+      default: ""
+    }
+  },
   data(){
     return{
       ingredient:{
@@ -43,7 +56,8 @@ export default {
         name: '',
         description: ''
       }
-    }
+    },
+
   }
 
 }

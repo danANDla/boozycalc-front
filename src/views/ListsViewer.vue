@@ -1,7 +1,10 @@
 <template>
   <dialog-window v-model:show="ingrsDialogVisible">
     <div class="form-container">
-      <add-ingredient-form @submitData="sendIngredient"></add-ingredient-form>
+      <add-ingredient-form @submitData="sendIngredient"
+                           :is-error="ingrAddIsError"
+                           :error-text="ingrAddErrorText">
+      </add-ingredient-form>
     </div>
   </dialog-window>
   <dialog-window v-model:show="ingrsSureVisible">
@@ -66,7 +69,9 @@ export default {
       ingrsDialogVisible: false,
       ingrsSureVisible: false,
       ingrSureName: String,
-      ingrSureId: Boolean
+      ingrSureId: Boolean,
+      ingrAddIsError: false,
+      ingrAddErrorText: ""
     }
   },
   methods: {
@@ -97,13 +102,18 @@ export default {
       this.page = r.tab.toLowerCase()
     },
     async sendIngredient(newIngredient) {
-      const response = await axios.post(this.api_url + 'ingredients/add', newIngredient)
+      let status = false
+      let errorText = ""
+      await axios.post(this.api_url + 'ingredients/add', newIngredient)
+          .then(function(response){
+            status = true;
+            console.log(response.status.valueOf())
+          })
           .catch(function (error) {
             if (error.response) {
               // Request made and server responded
               console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
+              errorText = error.response.data
             } else if (error.request) {
               // The request was made but no response was received
               console.log(error.request);
@@ -112,10 +122,16 @@ export default {
               console.log('Error', error.message);
             }
           })
-      if (response.status === 200) {
-        console.log(response.status.valueOf())
+      if (status === true) {
+        this.ingrAddIsError = false
+        this.ingrAddErrorText = ""
         await this.fetchIngredients()
         this.ingrsDialogVisible = false
+      }
+      else{
+        console.log("is Error")
+        this.ingrAddIsError = true
+        this.ingrAddErrorText = errorText
       }
     },
     showSureIngredient(id, name) {
