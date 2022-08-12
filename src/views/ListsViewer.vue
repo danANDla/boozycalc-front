@@ -177,8 +177,10 @@ export default {
       this.cocksDialogVisible = true
     },
     async sendCocktail(newCocktail){
+      let badNewItem = false
       if(newCocktail.ingredients.length === 0){
         this.cockAddIsError = true
+        badNewItem = true
         this.cockAddErrorText = "empty recipe"
       }
       else{
@@ -186,15 +188,49 @@ export default {
           console.log(newCocktail.ingredients[t].ingredientId)
           if(newCocktail.ingredients[t].ingredientId === -1 || newCocktail.ingredients[t].amount <= 0){
             this.cockAddIsError = true
+            badNewItem = true
             this.cockAddErrorText = "bad ingredient pick"
           }
         }
       }
       if(newCocktail.name === ""){
+
         this.cockAddIsError = true
+        badNewItem = true
         this.cockAddErrorText = "empty name field"
       }
-      console.log(newCocktail)
+      if(!badNewItem){
+        console.log(newCocktail)
+        let status = false
+        let errorText = ""
+        await axios.post(this.api_url + 'cocktails/add', newCocktail)
+            .then(function(response){
+              status = true;
+              console.log(response.status.valueOf())
+            })
+            .catch(function (error) {
+              if (error.response) {
+                // Request made and server responded
+                console.log(error.response.data);
+                errorText = error.response.data
+              } else if (error.request) {
+                // The request was made but no response was received
+                console.log(error.request);
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+              }
+            })
+        if (status === true) {
+          await this.fetchCocktails()
+          this.cocksDialogVisible = false
+        }
+        else{
+          console.log("is Error")
+          this.cockAddIsError = true
+          this.cockAddErrorText = errorText
+        }
+      }
     }
   },
   mounted() {
